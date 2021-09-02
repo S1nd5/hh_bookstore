@@ -1,2 +1,2 @@
 # hh_bookstore
-*** Coming soon. ***
+Coming soon.
