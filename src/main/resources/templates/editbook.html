@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Bookstore</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<div style="margin: 10px auto; min-width: 800px; max-width: 1200px;">
+		<h1>Edit book</h1>
+		<form  th:object="${book}" th:action="@{../save}" action="#" method="post">
+			<input type="hidden" th:field="*{id}"> 
+			<div class="form-group">
+				<label for="author">* Author:</label>
+				<input class="form-control" type="text" th:field="*{author}"/>
+			</div>
+			<div class="form-group">
+				<label for="author">* Title:</label>
+				<input class="form-control" type="text" th:field="*{title}"/>
+			</div>
+			<div class="form-group">
+				<label for="author">* ISBN:</label>
+				<input class="form-control" type="text" th:field="*{isbn}"/>
+			</div>
+			<div class="form-group">
+				<label for="author">Year:</label>
+				<input class="form-control" type="text" th:field="*{year}"/>
+			</div>
+			<div th:if="${msg}" th:text="${msg}" class="alert alert-danger" role="alert">
+			</div>
+			<a class="btn btn-info" href="/booklist">Back</a>
+			<input class="btn btn-success" type="submit" value="Save"/>
+		</form> 
+	</div>
+</body>
+</html>
