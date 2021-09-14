@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.bookstore.domain.Book;
 import com.example.bookstore.domain.BookRepository;
+import com.example.bookstore.domain.Category;
+import com.example.bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
 	
 	 @Autowired
 	 private BookRepository repository;
+	 
+	 @Autowired
+	 private CategoryRepository catRepository;
 	 
 	 public void doSomething() {
 		 //List<Book> books = repository.getIsbn("AAAA");
@@ -35,6 +40,7 @@ public class BookController {
 	@RequestMapping("/addbook")
 	public String addbook(Model model) {
 		model.addAttribute("book", new Book());
+		model.addAttribute("categories", catRepository.findAll());
 		return "addbook";
 	}
 	
@@ -56,6 +62,7 @@ public class BookController {
 	@RequestMapping(value = "/edit/{id}")
 	public String editBook(@PathVariable Long id, Model model) {
 		model.addAttribute("book", this.repository.findById(id));
+		model.addAttribute("categories", catRepository.findAll());
 		return "editbook";
 	}
 	
@@ -74,12 +81,17 @@ public class BookController {
 	public CommandLineRunner demo(BookRepository repository) {
 		return (args) -> {
 		 // Your code...add some demo data to db
-			System.out.println("test");
+			Category kategoria = new Category("Yleinen");
+			this.catRepository.save(kategoria);
+			this.catRepository.save(new Category("Turhakkeet"));
+			Category illu = new Category("Illuminati");
+			this.catRepository.save(illu);
 			//String title, String author, int year, String isbn, Double price
-			Book uusi = new Book("Testikirja 1", "Pirkko Puro", "2010", "AAAA", 19.95);
-			Book uusi2 = new Book("Testikirja 2", "Matti Puro", "2020", "BBBB", 19.95);
+			Book uusi = new Book("Testikirja 1", "Pirkko Puro", "2010", "AAAA", 19.95, kategoria);
+			Book uusi2 = new Book("Testikirja 2", "Matti Puro", "2020", "BBBB", 19.95, kategoria);
 			this.repository.save(uusi);
 			this.repository.save(uusi2);
+			this.repository.save(new Book("WTC-tornien kohtalo", "Anonymous", "2021", "DDDD", 99.95, illu));
 		};
 	}
 	

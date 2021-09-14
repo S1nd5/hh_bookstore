@@ -26,8 +26,14 @@
 				<label for="author">Year:</label>
 				<input class="form-control" type="text" th:field="*{year}"/>
 			</div>
-			<div th:if="${msg}" th:text="${msg}" class="alert alert-danger" role="alert">
+			<div class="form-group">
+				<label for="catlist">* Category</label>
+				<select id="catlist" th:field="*{category}" class="form-control">
+				 <option th:each="category: ${categories}" th:value="${category.id}"
+				 th:text="${category.name}"></option>
+				</select>
 			</div>
+			<div th:if="${msg}" th:text="${msg}" class="alert alert-danger" role="alert"></div>
 			<a class="btn btn-info" href="/booklist">Back</a>
 			<input class="btn btn-success" type="submit" value="Save"/>
 		</form> 
