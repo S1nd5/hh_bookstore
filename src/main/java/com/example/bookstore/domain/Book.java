@@ -6,11 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Book {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String title;
@@ -21,6 +23,7 @@ public class Book {
 	
 	@ManyToOne
 	@JoinColumn(name = "category")
+	@JsonBackReference
 	private Category category;
 	
 	public Book() {}
@@ -97,8 +100,4 @@ public class Book {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
-	
-	
-	
 }
