@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.bookstore.domain.Book;
 import com.example.bookstore.domain.BookRepository;
 
-import com.example.bookstore.domain.Book;
-
 @RestController
 public class RestControl {
 	
