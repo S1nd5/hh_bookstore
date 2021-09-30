@@ -2,8 +2,7 @@ package com.example.bookstore.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,18 +16,15 @@ import com.example.bookstore.domain.BookRepository;
 import com.example.bookstore.domain.Category;
 import com.example.bookstore.domain.CategoryRepository;
 
+@SuppressWarnings("unused")
 @Controller
 public class BookController {
 	
-	 @Autowired
-	 private BookRepository repository;
+	@Autowired
+	private BookRepository repository;
 	 
-	 @Autowired
-	 private CategoryRepository catRepository;
-	 
-	 public void doSomething() {
-		 //List<Book> books = repository.getIsbn("AAAA");
-	 }
+	@Autowired
+	private CategoryRepository catRepository;
 	 
 	@RequestMapping("/booklist")
 	public String home(Model model) {
@@ -46,6 +42,7 @@ public class BookController {
 	}
 	
 	@RequestMapping(value = "/delete/{id}")
+	 @PreAuthorize("hasAuthority('ADMIN')")
 	public String removeBook(@PathVariable Long id) {
 		this.repository.deleteById(id);
 		System.out.println("Removed book: " + id);
@@ -76,24 +73,6 @@ public class BookController {
 			model.addAttribute("msg", "Invalid input, make sure that you have provided details asked.");
 			return "addbook";
 		}
-	}
-	
-	@Bean
-	public CommandLineRunner demo(BookRepository repository) {
-		return (args) -> {
-		 // Your code...add some demo data to db
-			Category kategoria = new Category("Yleinen");
-			this.catRepository.save(kategoria);
-			this.catRepository.save(new Category("Turhakkeet"));
-			Category illu = new Category("Illuminati");
-			this.catRepository.save(illu);
-			//String title, String author, int year, String isbn, Double price
-			Book uusi = new Book("Testikirja 1", "Pirkko Puro", "2010", "AAAA", 19.95, kategoria);
-			Book uusi2 = new Book("Testikirja 2", "Matti Puro", "2020", "BBBB", 19.95, kategoria);
-			this.repository.save(uusi);
-			this.repository.save(uusi2);
-			this.repository.save(new Book("WTC-tornien kohtalo", "Anonymous", "2021", "DDDD", 99.95, illu));
-		};
 	}
 	
 	@RequestMapping("/")
