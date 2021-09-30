@@ -8,5 +8,5 @@ Content:
 2. Database & JPA
 3. REST service
 4. Spring Security
-5. ~~Testing (JUnit)~~. To be implemented.
-6. ~~Release & Deployement ~~. 
+5. Testing (JUnit)
+6. Release & Deployement to Heroku. [Bookstore App Heroku](https://bookstore-lehtokari.herokuapp.com/)
